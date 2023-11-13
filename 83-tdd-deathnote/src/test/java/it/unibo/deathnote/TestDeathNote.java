@@ -1,5 +1,10 @@
 package it.unibo.deathnote;
 
-class TestDeathNote {
+import org.junit.jupiter.api.Test;
 
+class TestDeathNote {
+    @Test
+    public void testRuleZeroAndNegativeRules() {
+        
+    }
 }
