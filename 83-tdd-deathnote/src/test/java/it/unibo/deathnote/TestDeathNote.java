@@ -14,10 +14,13 @@ class TestDeathNote {
 
     private DeathNote deathNote;
     private String name;
+    private String cause;
 
     @BeforeEach
     public void setUp() {
         deathNote = new DeathNoteImpl();
+        name = "Leonardo Grimaldi";
+        cause = "Cardiac arrest from drinking too many energy drinks";
     }
 
 
@@ -42,7 +45,6 @@ class TestDeathNote {
 
     @Test
     public void testNameInsertion() {
-        name = "Leonardo Grimaldi";
         Assertions.assertFalse(deathNote.isNameWritten(name));
         deathNote.writeName(name);
         Assertions.assertTrue(deathNote.isNameWritten(name));
@@ -65,7 +67,11 @@ class TestDeathNote {
         } catch (IllegalArgumentException e) {
             assertEquals("Cannot insert null string inside death note", e.getMessage());
         }
-        
+    }
 
+    @Test
+    public void testCauseOfDeath() {
+        deathNote.writeDeathCause(cause);
+        
     }
 }
