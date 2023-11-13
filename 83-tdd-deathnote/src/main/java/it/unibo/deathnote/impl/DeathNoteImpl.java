@@ -1,6 +1,7 @@
 package it.unibo.deathnote.impl;
 
 import it.unibo.deathnote.api.DeathNote;
+import it.unibo.deathnote.Human;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,23 +15,10 @@ import java.util.Set;
 
 public class DeathNoteImpl implements DeathNote {
 
-    final private Set<String> names;
-    private String lastName;
-
-    class Human {
-        final private String name;
-        final private String cause;
-        final private String details;
-
-        public Human(final String name, final String cause, final String details) {
-            this.name = name;
-            this.cause = cause;
-            this.details = details;
-        }
-    }
-
+    final private Set<Human> humans;
+    
     public DeathNoteImpl() {
-        names = new HashSet<String>();
+        humans = new HashSet<Human>();
     }
 
     @Override
@@ -50,7 +38,7 @@ public class DeathNoteImpl implements DeathNote {
         if (name.equals("")) {
             throw new IllegalArgumentException("Cannot insert empty string inside death note");
         }
-        if (!names.add(name)) {
+        if (!humans.add(new Human(name))) {
             throw new IllegalArgumentException("Cannot insert the same person");
         }
     }
@@ -80,7 +68,7 @@ public class DeathNoteImpl implements DeathNote {
 
     @Override
     public boolean isNameWritten(final String name) {
-        return names.contains(name);
+        return humans.contains(name);
     }
     
 }
