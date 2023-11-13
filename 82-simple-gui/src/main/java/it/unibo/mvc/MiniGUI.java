@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
+import java.awt.TextField;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,13 +39,17 @@ public class MiniGUI {
         final JPanel boxPanel = new JPanel();
         canvas.setLayout(new BoxLayout(canvas, BoxLayout.X_AXIS));
         canvas.add(boxPanel, BorderLayout.CENTER);
+        final TextField result = new TextField("Result");
+        boxPanel.add(result, BorderLayout.NORTH);
         /*
          * Handlers
          */
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                System.out.println(randomGenerator.nextInt());
+                int rand = randomGenerator.nextInt();
+                System.out.println(rand);
+                result.setText(Integer.toString(rand));
             }
         });
     }
