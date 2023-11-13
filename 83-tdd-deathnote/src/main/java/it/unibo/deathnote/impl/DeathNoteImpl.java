@@ -16,7 +16,7 @@ import java.util.Set;
 public class DeathNoteImpl implements DeathNote {
 
     final private Set<Human> humans;
-    
+
     public DeathNoteImpl() {
         humans = new HashSet<Human>();
     }
@@ -38,14 +38,20 @@ public class DeathNoteImpl implements DeathNote {
         if (name.equals("")) {
             throw new IllegalArgumentException("Cannot insert empty string inside death note");
         }
-        if (!humans.add(new Human(name))) {
-            throw new IllegalArgumentException("Cannot insert the same person");
+        for (Human h : humans) {
+            /*Bad implementation for finding duplicates. A set should already check during the add() but to keep the 
+            * implementation simpler i'm doing it this way.
+            */
+            if (h.getName().equals(name)); {
+                throw new IllegalArgumentException("Cannot insert the same person");
+            }
         }
+        humans.add(new Human(name));
     }
 
     @Override
     public boolean writeDeathCause(final String cause) {
-        
+        return false;
     }
 
     @Override
