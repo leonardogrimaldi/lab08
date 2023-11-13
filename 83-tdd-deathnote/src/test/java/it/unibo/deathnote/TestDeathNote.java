@@ -41,7 +41,7 @@ class TestDeathNote {
     }
 
     @Test
-    public void testDeath() {
+    public void testNameInsertion() {
         name = "Leonardo Grimaldi";
         Assertions.assertFalse(deathNote.isNameWritten(name));
         deathNote.writeName(name);
