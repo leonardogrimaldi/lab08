@@ -1,6 +1,9 @@
 package it.unibo.deathnote;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.concurrent.TimeUnit;
@@ -17,12 +20,14 @@ class TestDeathNote {
     private DeathNote deathNote;
     private String name;
     private String cause;
+    private String details;
 
     @BeforeEach
     public void setUp() {
         deathNote = new DeathNoteImpl();
         name = "Leonardo Grimaldi";
-        cause = "Cardiac arrest from drinking too many energy drinks";
+        cause = "cardiac arrest";
+        details = "drank too many energy drinks";
     }
 
 
@@ -83,13 +88,28 @@ class TestDeathNote {
         deathNote.writeDeathCause(cause);
         Assertions.assertEquals(cause, deathNote.getDeathCause(name));
         deathNote.writeName("Light Yagami");
-        Assertions.assertEquals(true, deathNote.writeDeathCause("Karting accident"));
+        Assertions.assertTrue(deathNote.writeDeathCause("karting accident"));
         try {
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        assertEquals(false, deathNote.writeDeathCause("Car accident"));
+        assertFalse(deathNote.writeDeathCause("car accident"));
+    }
+
+    @Test
+    public void testDeath() {
+        try {
+            deathNote.writeDetails(details);
+            fail("Details of death were written before a name was written");
+        } catch (IllegalStateException e) {
+            assertEquals("Cannot write details of death before a name is written in the death note", e.getMessage());
+        }
+        deathNote.writeName(name);
+        assertEquals("", deathNote.getDeathDetails(name));
+        assertTrue(deathNote.writeDetails("ran for too long"));
+        
+
     }
 }
