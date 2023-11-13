@@ -13,10 +13,11 @@ import it.unibo.deathnote.impl.DeathNoteImpl;
 class TestDeathNote {
 
     private DeathNote deathNote;
+    private String name;
 
     @BeforeEach
     public void setUp() {
-        deathNote = new DeathNoteImpl();    
+        deathNote = new DeathNoteImpl();
     }
 
 
@@ -37,5 +38,34 @@ class TestDeathNote {
             Assertions.assertNotEquals("", rule);
             Assertions.assertNotEquals(null, rule);
         }
+    }
+
+    @Test
+    public void testDeath() {
+        name = "Leonardo Grimaldi";
+        Assertions.assertFalse(deathNote.isNameWritten(name));
+        deathNote.writeName(name);
+        Assertions.assertTrue(deathNote.isNameWritten(name));
+        try {
+            deathNote.writeName(name);
+            fail("User was allowed to insert duplicate name");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Cannot insert the same person", e.getMessage());
+        }
+        try {
+            deathNote.writeName("");
+            fail("User was allowed to insert empty string as name");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Cannot insert empty string inside death note", e.getMessage());
+        }
+        try {
+            /*Test null string insertion even though exercise doesn't ask*/
+            deathNote.writeName(null);
+            fail("User was allowed to insert null string");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Cannot insert null string inside death note", e.getMessage());
+        }
+        
+
     }
 }
