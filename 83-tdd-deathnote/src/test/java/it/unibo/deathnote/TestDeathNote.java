@@ -3,6 +3,8 @@ package it.unibo.deathnote;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.concurrent.TimeUnit;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -71,7 +73,23 @@ class TestDeathNote {
 
     @Test
     public void testCauseOfDeath() {
+        try {
+            deathNote.writeDeathCause(cause);
+            fail("The death cause has been written before a name was written");
+        } catch (IllegalStateException e) {
+            Assertions.assertEquals("Cannot write cause of death before a name has been written", e.getMessage());
+        }
+        deathNote.writeName(name);
         deathNote.writeDeathCause(cause);
-        
+        Assertions.assertEquals(cause, deathNote.getDeathCause(name));
+        deathNote.writeName("Light Yagami");
+        Assertions.assertEquals(true, deathNote.writeDeathCause("Karting accident"));
+        try {
+            TimeUnit.MILLISECONDS.sleep(100);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        assertEquals(false, deathNote.writeDeathCause("Car accident"));
     }
 }
