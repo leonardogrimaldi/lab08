@@ -2,6 +2,7 @@ package it.unibo.deathnote;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -27,7 +28,7 @@ class TestDeathNote {
         deathNote = new DeathNoteImpl();
         name = "Leonardo Grimaldi";
         cause = "cardiac arrest";
-        details = "drank too many energy drinks";
+        details = "ran for too long";
     }
 
 
@@ -92,7 +93,6 @@ class TestDeathNote {
         try {
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         assertFalse(deathNote.writeDeathCause("car accident"));
@@ -108,8 +108,15 @@ class TestDeathNote {
         }
         deathNote.writeName(name);
         assertEquals("", deathNote.getDeathDetails(name));
-        assertTrue(deathNote.writeDetails("ran for too long"));
-        
-
+        assertTrue(deathNote.writeDetails(details));
+        assertEquals(details, deathNote.getDeathDetails(name));
+        deathNote.writeName("Light Yagami");
+        try {
+            TimeUnit.MILLISECONDS.sleep(6100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertFalse(deathNote.writeDetails("fell while running"));
+        assertNotEquals("fell while running", deathNote.getDeathDetails(name));
     }
 }
