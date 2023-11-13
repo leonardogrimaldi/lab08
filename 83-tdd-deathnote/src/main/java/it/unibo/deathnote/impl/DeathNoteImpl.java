@@ -2,7 +2,15 @@ package it.unibo.deathnote.impl;
 
 import it.unibo.deathnote.api.DeathNote;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
 public class DeathNoteImpl implements DeathNote {
+
+    private Set<String> names;
 
     @Override
     public String getRule(int ruleNumber) {
@@ -13,7 +21,7 @@ public class DeathNoteImpl implements DeathNote {
     @Override
     public void writeName(String name) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'writeName'");
+        throw new IllegalArgumentException("Cannot insert the same person");
     }
 
     @Override
