@@ -39,6 +39,10 @@ public class DeathNoteImpl implements DeathNote {
         }
     }
 
+    /**
+     * @throws IllegalArgumentException if {@code name} is empty 
+     * @throws IllegalArgumentException if {@link DeathNoteImpl#humans} already contains that name/person
+     */
     @Override
     public void writeName(final String name) {
         if (name == null) {
