@@ -31,6 +31,9 @@ public class Human {
         this.details = details;
     }
 
+    /**@implNote
+     * Implemented equals using this website https://www.technofundo.com/tech/java/equalhash.html
+     * */
     @Override
     public boolean equals(Object o) {
         /*If the object is compared with itself return true*/
@@ -45,4 +48,13 @@ public class Human {
         return this.name.equals(h.name);
     }
 
+    /**@implNote
+     * Implemented hashCode using this website https://www.technofundo.com/tech/java/equalhash.html
+     * */
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash + (null == name ? 0 : name.hashCode());
+        return hash;
+    }
 }

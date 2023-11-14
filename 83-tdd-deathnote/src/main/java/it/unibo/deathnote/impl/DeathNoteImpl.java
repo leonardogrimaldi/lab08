@@ -38,15 +38,9 @@ public class DeathNoteImpl implements DeathNote {
         if (name.equals("")) {
             throw new IllegalArgumentException("Cannot insert empty string inside death note");
         }
-        for (Human h : humans) {
-            /*Bad implementation for finding duplicates. A set should already check during the add() but to keep the 
-            * implementation simpler i'm doing it this way.
-            */
-            if (h.getName().equals(name)); {
-                throw new IllegalArgumentException("Cannot insert the same person");
-            }
+        if (!humans.add(new Human(name))) {
+            throw new IllegalArgumentException("Cannot insert the same person");
         }
-        humans.add(new Human(name));
     }
 
     @Override
@@ -74,7 +68,6 @@ public class DeathNoteImpl implements DeathNote {
 
     @Override
     public boolean isNameWritten(final String name) {
-        return humans.contains(name);
-    }
-    
+        return humans.contains(new Human(name));
+    }    
 }
