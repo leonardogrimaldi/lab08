@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Human {
     final private String name;
-    private String cause;
-    private String details;
+    private String cause = "";
+    private String details = "";
 
     public Human(final String name) {
         this.name = name;
