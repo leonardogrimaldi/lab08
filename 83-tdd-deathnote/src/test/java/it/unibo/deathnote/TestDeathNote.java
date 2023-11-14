@@ -119,4 +119,15 @@ class TestDeathNote {
         assertFalse(deathNote.writeDetails("fell while running"));
         assertNotEquals("fell while running", deathNote.getDeathDetails(name));
     }
+
+    @Test
+    public void sameHumans() {
+        final Human leo1 = new Human(name);
+        final Human leo2 = new Human(name);
+
+        assertTrue(leo1.equals(leo2));
+        assertTrue(leo1.equals(leo1));
+        assertFalse(leo1.equals(new Object()));
+        assertFalse(leo1.equals(new Human("Light Yagami")));
+    }
 }
