@@ -126,7 +126,7 @@ class TestDeathNote {
         final Human leo2 = new Human(name);
 
         assertTrue(leo1.equals(leo2));
-        assertTrue(leo2.equals(leo1));
+        assertTrue(leo2.equals(leo1));  // Symmetry
         assertTrue(leo1.equals(leo1));
         assertFalse(leo1.equals(new Object()));
         assertFalse(leo1.equals(new Human("Light Yagami")));
