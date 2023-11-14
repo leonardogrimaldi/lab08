@@ -32,7 +32,7 @@ class TestDeathNote {
     }
 
     /**
-     * Test number 1
+     * Checks if you can retrieve rules 0 and -1
      */
     @Test
     public void testRuleZeroAndNegativeRules() {
@@ -52,6 +52,9 @@ class TestDeathNote {
         }
     }
 
+    /**
+     * Checks if there exist empty or null rules
+     */
     @Test
     public void testRulesNotNullOrEmpty() {
         for (String rule : DeathNote.RULES) {
@@ -60,6 +63,9 @@ class TestDeathNote {
         }
     }
 
+    /**
+     * Checks name insertion including duplicates, empty strings and null strings
+     */
     @Test
     public void testNameInsertion() {
         Assertions.assertFalse(deathNote.isNameWritten(name));
@@ -86,6 +92,9 @@ class TestDeathNote {
         }
     }
 
+    /**
+     * Checks death cause insertion including the correct timings
+     */
     @Test
     public void testCauseOfDeath() {
         try {
@@ -107,6 +116,9 @@ class TestDeathNote {
         assertFalse(deathNote.writeDeathCause("car accident"));
     }
 
+    /**
+     * Checks detail insertion including correct timings
+     */
     @Test
     public void testDeath() {
         try {
