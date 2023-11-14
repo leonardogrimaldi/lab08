@@ -31,13 +31,22 @@ class TestDeathNote {
         details = "ran for too long";
     }
 
-
+    /**
+     * Test number 1
+     */
     @Test
     public void testRuleZeroAndNegativeRules() {
         try {
             deathNote.getRule(0);
             deathNote.getRule(-1);
-            fail("Rules 0 and -1 exist");
+            fail("Rule 0 exists");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Cannot access rule number 0 and negative rules as they do not exist", e.getMessage());
+        }
+
+        try {
+            deathNote.getRule(-1);
+            fail("Rule -1 exists");
         } catch (IllegalArgumentException e) {
             assertEquals("Cannot access rule number 0 and negative rules as they do not exist", e.getMessage());
         }
