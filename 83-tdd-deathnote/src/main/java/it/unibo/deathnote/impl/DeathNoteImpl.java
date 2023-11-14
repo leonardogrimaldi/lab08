@@ -33,7 +33,7 @@ public class DeathNoteImpl implements DeathNote {
     @Override
     public void writeName(final String name) {
         if (name == null) {
-            throw new IllegalArgumentException("Cannot insert null string inside death note");
+            throw new NullPointerException("Cannot insert null string inside death note");
         }
         if (name.equals("")) {
             throw new IllegalArgumentException("Cannot insert empty string inside death note");

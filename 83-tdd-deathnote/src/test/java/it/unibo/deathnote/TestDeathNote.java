@@ -72,7 +72,7 @@ class TestDeathNote {
             /*Test null string insertion even though exercise doesn't ask*/
             deathNote.writeName(null);
             fail("User was allowed to insert null string");
-        } catch (IllegalArgumentException e) {
+        } catch (NullPointerException e) {
             assertEquals("Cannot insert null string inside death note", e.getMessage());
         }
     }
