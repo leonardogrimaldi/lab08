@@ -12,12 +12,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class DeathNoteImpl implements DeathNote {
 
     final private Set<Human> humans;
     private Human lastHumanWritten;
-    private long timeLastHumanWritten;
+    /**
+     * Time last operation was written (Could be the lastHumanWritten, his details or cause)
+     */
+    private long timeLastWrite; 
 
     public DeathNoteImpl() {
         humans = new HashSet<Human>();
@@ -45,7 +49,7 @@ public class DeathNoteImpl implements DeathNote {
             throw new IllegalArgumentException("Cannot insert the same person");
         }
         lastHumanWritten = hNew;
-        timeLastHumanWritten = System.currentTimeMillis();
+        timeLastWrite = System.currentTimeMillis();
     }
 
     @Override
@@ -54,17 +58,31 @@ public class DeathNoteImpl implements DeathNote {
             throw new IllegalStateException("Cannot write cause of death before a name has been written");
         }
         long currentTime = System.currentTimeMillis();
-        if (currentTime - timeLastHumanWritten < 40) {
+        if (currentTime - timeLastWrite < 40) {
             lastHumanWritten.setCause(cause);
+            timeLastWrite = System.currentTimeMillis();
+
             return true;
         }
+
         return false;
     }
 
     @Override
     public boolean writeDetails(final String details) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'writeDetails'");
+        Objects.requireNonNull(details);
+        if (lastHumanWritten == null) {
+            throw new IllegalStateException("Cannot write details of death before a name is written in the death note");
+        }
+        long currentTime = System.currentTimeMillis();
+        
+        if (currentTime - timeLastWrite < 6040) {
+            lastHumanWritten.setDetails(details);
+            timeLastWrite = System.currentTimeMillis();
+            return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -72,10 +90,7 @@ public class DeathNoteImpl implements DeathNote {
         Human h = new Human(name);
         for (Human k : humans) {
             if (k.equals(h)) {
-                if (k.getCause().equals("")) {
-                    return "heart attack";
-                }
-                return k.getCause();
+                return k.getCause().equals("") ? "heart attack" : k.getCause();
             }
         }
         throw new IllegalArgumentException("Person does not exist inside death note");
@@ -83,12 +98,19 @@ public class DeathNoteImpl implements DeathNote {
 
     @Override
     public String getDeathDetails(final String name) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDeathDetails'");
+        Objects.requireNonNull(name);
+        Human h = new Human(name);
+        for (Human k : humans) {
+            if (k.equals(h)) {
+                return k.getDetails().equals("") ? "" : k.getDetails();
+            }
+        }
+
+        throw new IllegalArgumentException("Person does not exist inside death note");
     }
 
     @Override
     public boolean isNameWritten(final String name) {
         return humans.contains(new Human(name));
-    }    
+    }
 }
