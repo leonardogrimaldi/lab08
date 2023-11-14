@@ -23,6 +23,9 @@ public class DeathNoteImpl implements DeathNote {
      */
     private long timeLastWrite; 
 
+    /**
+     * Creates a HashSet of Human. Since it is a HashSet, duplicates cannot exist inside of it.
+     */
     public DeathNoteImpl() {
         humans = new HashSet<Human>();
     }
