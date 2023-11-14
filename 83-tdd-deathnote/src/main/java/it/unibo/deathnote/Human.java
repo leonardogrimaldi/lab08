@@ -1,7 +1,5 @@
 package it.unibo.deathnote;
 
-import java.util.Objects;
-
 public class Human {
     final private String name;
     private String cause = "";
